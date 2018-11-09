@@ -1,0 +1,108 @@
+//*********************************************************************
+
+// This program calculates an average of grades read from a file corresponding 
+// to a list of students
+
+//
+#include <iomanip>		
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cmath>
+#include <cctype>
+
+
+using namespace std;
+//Function Prototype
+double average(double sum, double total);
+
+int main()
+{
+	// Declare variables
+    						
+	const int MAX = 600;
+	string name[MAX];
+	int grade[MAX];
+	int	quantity, x;
+		int sum = 0;
+		double avg;
+
+		// file variable 
+		ifstream inFile;
+	inFile.open("data7.txt");
+	//outfile 
+	ofstream outFile;
+	outFile.open("Results.txt");
+	// open the file
+	if (!inFile)							// if it was not opened
+	{
+		cout << "Could not open input file" << endl;
+		system("pause");
+		return 1;							// stop the program
+
+	}
+
+	// Process input data
+
+	x = 0;
+	while (!inFile.eof())
+	{
+
+		inFile >> name[x];
+		inFile>> grade[x];
+		x++;
+	}
+
+	cout << "Enter quantity of grades to be processed (0-" << x << "): ";
+	cin >> quantity;
+	cout << "Your result is in result.txt: ";
+	cout << endl;
+	// for loop to get the sum and the average
+	for (x = 0; x < quantity; x++)
+		sum = sum + grade[x];
+
+	avg = average(sum, quantity);
+
+
+	//print the average grade
+
+	outFile << " Average grade: " << avg << endl << endl; 
+	cout << " Average grade: " << avg << endl; 
+	
+	outFile<< setw(12 ) << left << "Name" << right << setw(9) << "Grade" << "   Comment" << endl << endl;
+	for (x = 0; x < quantity; x++)
+	{
+		//cout.setf(ios::left);
+		outFile <<setw(12) << left << name[x] << right << setw(9) << grade[x];
+		if (grade[x] < avg)
+			outFile << "   below average" << endl;
+		else if (grade[x] > avg)
+			outFile << "   above average" << endl;
+		else
+			outFile << "   average" << endl;
+		
+	}
+
+	cout << endl;
+	// close the file
+	inFile.close();
+	outFile.close();
+	system("pause");
+	return 0;                             
+}
+
+double average(double sum, double total)
+{
+
+	if (total == 0)
+		return 0;
+	else
+		// calculate and round average
+		return (static_cast<double>(sum) /(total));
+	//rounding to the nearest tenths
+	/*total*= 10.0;
+	total = floor(total+ 0.5);
+	total /= 10.0;*/
+		
+}
+
