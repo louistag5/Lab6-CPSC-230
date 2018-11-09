@@ -1,0 +1,119 @@
+//*********************************************************************
+// CPSC 230                   FALL 2018                        HW #6-7
+//Gregory louis      
+// This program calculates an average of grades read from a file corresponding 
+// to a list of students. We declare variable Infile to get the data from inut file. The program also use a function
+// where assign to average the value returned. .
+
+//
+#include <iomanip>		
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cmath>
+#include <cctype>
+
+
+using namespace std;
+//constant
+const int MAX = 600;
+//Function Prototype
+double average(int sum, int total);
+double rounding(double avg_rounded);
+
+int main()
+{
+	// Declare variables
+	//array of strings that holds MAX
+	string name[MAX];
+	int grade[MAX];
+	int	quantity=0;
+	int x = 0;
+		int sum = 0;
+		double avg;
+
+		// file variable 
+		ifstream inFile;
+	inFile.open("data7.txt");
+	//outfile 
+	ofstream outFile;
+		//check the file to see if it was not opened, if not display the message
+	if (!inFile)							
+	{
+		cout << "Could not open input file" << endl;
+		system("pause");
+		exit(1);							
+
+	}
+
+	// This where the process of  inputing  data happens
+	while (!inFile.eof())
+	{
+
+		inFile >> name[x];
+		inFile>> grade[x];
+		x++;
+	}
+	   //display the quantity of grades , then the user will follow by entering the quanity
+	cout << "Enter quantity of grades to be processed (0- " << x << "): ";
+	cin >> quantity;
+	cout << endl;
+	// for loop to get the sum and the average
+	for (x = 0; x < quantity; x++)
+		sum = sum + grade[x];
+
+	//function call
+	avg = average(sum, quantity);
+	cout << fixed << showpoint << setprecision(1);
+	//create the ouFile
+	outFile.open("Results.txt");
+	//print the average grade
+	outFile << " Average grade: " << avg << endl << endl; 
+	cout << fixed << showpoint << setprecision(1);
+	cout << " Average grade: " << avg << endl; 
+	//from the outfile the user will find the quantity grades entered
+	outFile<< setw(12 ) << left << "Name" << right << setw(9) << "Grade" << "   Comment" << endl << endl;
+	for (x = 0; x < quantity; x++)
+	{
+		//cout.setf(ios::left);
+		outFile <<setw(12) << left << name[x] << right << setw(9) << grade[x];
+		if (grade[x] < avg)
+			outFile << "   below average" << endl;
+		else if (grade[x] > avg)
+			outFile << "   above average" << endl;
+		else
+			outFile << "   average" << endl;
+		
+	}
+
+	cout << endl;
+	// close the file
+	inFile.close();
+	outFile.close();
+	//sending the user to the oufile that's been created to see the rest of the stuff
+	cout << "Your result is in result.txt: ";
+
+	system("pause");
+	return 0;                             
+}
+//function 
+double average(int sum, int total)
+{
+	if (total == 0)
+		return 0;
+	else
+		// calculate and round average
+		return rounding((sum /(double)total));
+	
+}
+//return average rounded to 1 decimal place
+double rounding(double avg_rounded)
+{
+	int count;
+	avg_rounded * 10;
+	avg_rounded += 0.5;
+	count = static_cast<int>(avg_rounded);
+	avg_rounded = static_cast<double>(count) / 10;
+	return avg_rounded;
+}
+
