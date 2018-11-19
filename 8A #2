@@ -1,0 +1,21 @@
+#include<iostream>
+using namespace std;
+int main()
+{char input[100];
+char output[100];
+int key,count;
+cout<<"Enter encrypted code: ";
+cin.getline(input,100);
+for(key=1;key<=100;key++)
+{for(count=0;input[count]!='\0';count++)
+    {if(input[count]-key<32)
+           output[count]=input[count]-key-32+127;
+     else
+           output[count]=input[count]-key;
+     }
+cout<<"Key "<<key<<": ";
+cout<<output<<endl;
+}
+system("pause");
+return 0;
+}
