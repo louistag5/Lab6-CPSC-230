@@ -1,0 +1,58 @@
+// Gregory LOuis       CPSC 230         8A 
+///This program is to read an encrypted message that the ennemies are using to communicate to each other
+//The program will decrypts the message. It will appear as gibberish if the user enter an invalid keys.
+
+#include<iomanip>
+#include<iostream>
+#include<cstring>
+
+using namespace std;
+
+int main()
+
+{    
+	//Declare variables
+
+	//here is the secret code to communicate with each other
+    // it is also the input
+	//cout << "Enter encrypted code: ";
+	char input[25] = ":mmZ\\dxZmx]Zpgy";
+	// output
+	char output[25];
+	int key, count;
+
+	
+
+	//cin.getline(input, 100);
+
+	//for loop
+	for (key = 1; key <= 100; key++)
+
+	{
+		for (count = 0; input[count] != '\0'; count++)
+
+		{
+			if (input[count] - key < 32)
+
+				output[count] = input[count] - key - 32 + 127;
+
+			else
+
+				output[count] = input[count] - key;
+
+		}
+		
+		//should stop after going over the number/letters 
+		//ignore the empty spaces that we do not need. 
+		output[count] = '\0'; 
+		cout << "Key " << key << ": ";
+
+		cout << output << endl;
+
+	}
+	//end the program
+	system("pause");
+
+	return 0;
+
+}
