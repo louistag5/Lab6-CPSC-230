@@ -1,0 +1,62 @@
+#// Gregory Louis      CPSC 230                   Lab 9B 
+
+// This is a letter to santa. So the children will enter their names and at the end it will tell them how
+// many gifts they have.
+
+include<iostream>
+#include<fstream>
+#include<cmath>
+#include<iomanip>
+#include<ctime>
+#include<cstdlib>
+#include<cctype>
+#include<string>
+#include<vector>
+
+using namespace std; 
+
+typedef string* christmas; 
+void bells(string a[], int size);
+
+int main() {
+
+	//variables
+	string numGifts;
+	string name;
+		string present; 
+	int i; 
+
+	// we put the input
+	cout << "What is your name? " << endl; 
+	getline(cin, name); 
+	cout << name << "How many gifts do bell want this year from Santa? " << endl; //endline
+	getline(cin, numGifts); 
+	//convver numGifts and convert string to int
+	int claus = stoi(numGifts);
+
+
+  //create a new string 
+	christmas a; 
+	a = new string[claus]; 
+	
+	bells(a, claus);
+	cout << "Dear Satan, " << endl; 
+	cout << setw(8) << "I belveive I have earned" << numGifts << "presents. " << endl; 
+	cout << "here is a list: " << endl; 
+	for (int i = 0; i < claus; i++)
+	{
+		cout << a[i] << endl; 
+
+	}
+	delete[] a; 
+	system("pause"); 
+	return 0;
+}
+void bells(string a[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << " What gifts did Santa bring you this year: " << endl; 
+		getline(cin, a[i]);
+	}
+}
